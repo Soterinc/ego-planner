@@ -50,10 +50,10 @@ namespace ego_planner
     ego_planner::DataDisp data_disp_;
 
     /* parameters */
-    int target_type_; // 1 mannual select, 2 hard code
+    int target_type_ = 1; // 1 mannual select, 2 hard code
     double no_replan_thresh_, replan_thresh_;
     double waypoints_[50][3];
-    int waypoint_num_;
+    int waypoint_num_ = 2;
     double planning_horizen_, planning_horizen_time_;
     double emergency_time_;
 
