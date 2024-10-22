@@ -12,7 +12,7 @@ namespace ego_planner
     have_odom_ = false;
 
     /*  fsm param  */
-    // nh.param("fsm/flight_type", target_type_, -1);
+    nh.param("fsm/flight_type", target_type_, -1);
     nh.param("fsm/thresh_replan", replan_thresh_, -1.0);
     nh.param("fsm/thresh_no_replan", no_replan_thresh_, -1.0);
     nh.param("fsm/planning_horizon", planning_horizen_, -1.0);
@@ -36,7 +36,9 @@ namespace ego_planner
     exec_timer_ = nh.createTimer(ros::Duration(0.01), &EGOReplanFSM::execFSMCallback, this);
     safety_timer_ = nh.createTimer(ros::Duration(0.05), &EGOReplanFSM::checkCollisionCallback, this);
 
-    odom_sub_ = nh.subscribe("/odom_world", 1, &EGOReplanFSM::odometryCallback, this);
+    // odom_sub_ = nh.subscribe("/odom_world", 1, &EGOReplanFSM::odometryCallback, this);
+    odom_sub_ = nh.subscribe("/drone_0/mavros/local_position/odom", 1, &EGOReplanFSM::odometryCallback, this);
+
 
     bspline_pub_ = nh.advertise<ego_planner::Bspline>("/planning/bspline", 10);
     data_disp_pub_ = nh.advertise<ego_planner::DataDisp>("/planning/data_display", 100);
