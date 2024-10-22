@@ -23,14 +23,18 @@ class PointCloudRepublisher:
     def callback(self, msg):
         # Update the latest point cloud with the received data
         self.latest_point_cloud = msg
-        self.latest_point_cloud.header.frame_id = 'world'
+        # self.latest_point_cloud.header.frame_id = 'world'
+        # self.latest_point_cloud.header.stamp = rospy.Time.now()
 
     def start(self):
         # Keep republishing the point cloud at 1 Hz
         while not rospy.is_shutdown():
             if self.latest_point_cloud:
                 # Publish the latest point cloud
+                self.latest_point_cloud.header.frame_id = 'world'
+                self.latest_point_cloud.header.stamp = rospy.Time.now()
                 self.publisher.publish(self.latest_point_cloud)
+                print(rospy.Time.now())
             self.rate.sleep()
 
 if __name__ == '__main__':
